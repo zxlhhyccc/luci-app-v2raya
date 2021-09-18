@@ -13,7 +13,7 @@ XHR.poll(3, '<%=url([[admin]], [[services]], [[v2raya]], [[status]])%>', null,
 );
 
 function openwebui(){
-	var url = window.location.host+":<%=luci.sys.exec("uci -q get verysync.config.port"):gsub("^%s*(.-)%s*$", "%1")%>";
+	var url = window.location.host+":<%=luci.sys.exec("uci -q get v2raya.config.port"):gsub("^%s*(.-)%s*$", "%1")%>";
 	window.open('http://'+url,'target','');
 };
 //]]>
