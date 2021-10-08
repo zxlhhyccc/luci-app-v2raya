@@ -22,7 +22,6 @@ o.rmempty = false
 o = s:option(Value, "config", translate("v2rayA configuration directory"))
 o.default = '/etc/v2raya'
 
-local e = luci.http.formvalue("cbi.apply")
 o.inputstyle = "reload"
     luci.sys.exec("/etc/init.d/v2raya restart >/dev/null 2>&1 &")
 
