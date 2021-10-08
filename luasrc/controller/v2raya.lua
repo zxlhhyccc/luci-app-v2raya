@@ -6,8 +6,8 @@ function index()
 	end
 
 	local page
-	page = entry({"admin", "services", "v2raya"}, firstchild(), _("v2rayA"), 10)
-	page.dependent = false
+	page = entry({"admin", "services", "v2raya"}, alias("admin", "services", "v2raya", "v2raya"), _("v2rayA"), 10)
+	page.dependent = true
 	page.acl_depends = { "luci-app-v2raya" }
 	
 	entry({"admin", "services", "v2raya", "v2raya"}, cbi("v2raya"), _("v2rayA"), 10).dependent = true
