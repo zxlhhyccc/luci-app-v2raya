@@ -3,7 +3,7 @@
 uci -q batch <<-EOF >/dev/null
 	delete ucitrack.@v2raya[-1]
 	add ucitrack v2raya
-	set ucitrack.@verysync[-1].init=v2raya
+	set ucitrack.@v2raya[-1].init=v2raya
 	commit ucitrack
 EOF
 
