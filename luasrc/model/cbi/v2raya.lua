@@ -99,7 +99,7 @@ vless_grpc_inbound_cert_key.rmempty = true
 vless_grpc_inbound_cert_key.description = translate("If you have a self-signed certificate,please check the box")
 
 vless_grpc_inbound_cert_key = s:option(DummyValue, "upload", translate("Upload"))
-vless_grpc_inbound_cert_key.template = "v2raya/certupload"
+vless_grpc_inbound_cert_key.template = "v2raya/v2raya_certupload"
 vless_grpc_inbound_cert_key:depends("vless_grpc_inbound_cert_key", 1)
 
 cert_dir = "/etc/v2raya/"
