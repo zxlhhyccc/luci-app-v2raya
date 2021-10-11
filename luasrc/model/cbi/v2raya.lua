@@ -1,11 +1,12 @@
 
 local m,s,o,o1
+require "luci.http"
 local fs = require "nixio.fs"
-local SYS  = require "luci.sys"
+local SYS = require "luci.sys"
 
 m = Map("v2raya", translate("v2rayA"), translatef("Simple v2rayA switch."))
 
-m:section(SimpleSection).template  = "v2raya/v2raya_status"
+m:section(SimpleSection).template = "v2raya/v2raya_status"
 
 s = m:section(TypedSection, "v2raya")
 s.anonymous=true
@@ -16,17 +17,17 @@ o.default = 0
 o.rmempty = false
 
 gui_address = s:option(Value, "address", translate("GUI access address"))
-gui_address.description = translate("Use 0.0.0.0:2017 to monitor all access.")
+gui_address.description = translate("Use 0.0.0.0 to monitor all access.")
 gui_address.default = "http://127.0.0.1:2017"
 gui_address.placeholder = "http://127.0.0.1:2017"
 gui_address.rmempty = false
 
 -- [[ Bin Path ]]--
 v2ray_bin = s:option(Value, "v2ray_bin", translate("Bin Path"), translate("v2rayA Bin path if no bin please download"))
-v2ray_bin.default     = "/usr/bin/v2raya"
-v2ray_bin.datatype    = "string"
+v2ray_bin.default = "/usr/bin/v2raya"
+v2ray_bin.datatype = "string"
 v2ray_bin.optional = false
-v2ray_bin.rmempty=false
+v2ray_bin.rmempty = false
 
 o.validate=function(self, value)
 if value=="" then return nil end
@@ -44,7 +45,7 @@ end
 return value
 end
 
-home = s:option(Value, "config", translate("Sv2rayA configuration directory"))
+home = s:option(Value, "config", translate("v2rayA configuration directory"))
 home.default = "/etc/v2raya"
 home.placeholder = "/etc/v2raya"
 home.rmempty = false
@@ -135,8 +136,8 @@ end
 vless_grpc_inbound_cert_key = s:option(Value, "certpath", translate("Current Certificate Path"))
 vless_grpc_inbound_cert_key.description = translate("Please confirm the current certificate path")
 vless_grpc_inbound_cert_key:depends("vless_grpc_inbound_cert_key", 1)
-vless_grpc_inbound_cert_key:value("crt",translate("etc/v2raya/grpc_certificate.crt"))
-vless_grpc_inbound_cert_key:value("key",translate("/etc/v2raya/grpc_private.key"))
+vless_grpc_inbound_cert_key:value("1",translate("etc/v2raya/grpc_certificate.crt"))
+vless_grpc_inbound_cert_key:value("2",translate("/etc/v2raya/grpc_private.key"))
 
 o.inputstyle = "reload"
     SYS.exec("/etc/init.d/v2raya restart >/dev/null 2>&1 &")
