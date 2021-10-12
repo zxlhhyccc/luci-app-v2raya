@@ -62,7 +62,7 @@ msgid "Disable log color"
 msgstr "禁用日志颜色"
 
 msgid "Log disable timestamp"
-msgstr "日志禁用时间戳"
+msgstr "禁用日志时间戳"
 
 msgid "Upload certificate"
 msgstr "上传证书"
