@@ -7,12 +7,12 @@ s = m:section(TypedSection, "v2raya")
 s.anonymous = true
 s.addremove=false
 
-o = s:option(Flag, "enabled", translate("Enable"))
+o = s:option(Flag, "enabled", translate("Enabled"))
 o.default = 0
 o.rmempty = false
 
 o = s:option(Value, "address", translate("GUI access address"))
-o.description = translate("Use 0.0.0.0 to monitor all access.")
+o.description = translate("Use 0.0.0.0:2017 to monitor all access.")
 o.default = "http://0.0.0.0:2017"
 o.rmempty = false
 

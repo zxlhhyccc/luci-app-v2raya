@@ -4,20 +4,14 @@ msgstr "v2rayA"
 msgid "Simple v2rayA switch."
 msgstr "简易的 v2rayA 开关"
 
-msgid "Enable Web API"
-msgstr "开启网页管理"
+msgid "Open v2rayA page"
+msgstr "打开 v2rayA 页面"
 
 msgid "GUI access address"
 msgstr "GUI访问地址"
 
 msgid "Use 0.0.0.0:2017 to monitor all access."
 msgstr "使用 0.0.0.0:2017 监听所有访问。"
-
-msgid "Bin Path"
-msgstr "执行文件路径"
-
-msgid "v2rayA Bin path if no bin please downloa"
-msgstr "v2rayA 执行文件路径  如果没有执行文件请自行下载"
 
 msgid "v2rayA configuration directory"
 msgstr "v2rayA 配置目录"
@@ -36,9 +30,6 @@ msgstr "开启"
 
 msgid "OFF"
 msgstr "关闭"
-
-msgid "Enable logging"
-msgstr "启用日志"
 
 msgid "Log file"
 msgstr "日志文件"
@@ -73,23 +64,18 @@ msgstr "禁用日志颜色"
 msgid "Log disable timestamp"
 msgstr "日志禁用时间戳"
 
-msgid "Self-signed Certificate"
-msgstr "自签证书"
-
-msgid "If you have a self-signed certificate,please check the box"
-msgstr "如果你使用自签证书，请选择"
-
-msgid "upload"
-msgstr "上传"
+msgid "Upload certificate"
+msgstr "上传证书"
 
 msgid "Upload"
 msgstr "上传"
 
+msgid "Specify the certification path instead of automatically generating a self-signed certificate."
+msgstr "指定证书路径而不是自动生成自签名证书。"
+
 msgid "No specify upload file."
 msgstr "没有上传证书"
 
-msgid "Current Certificate Path"
-msgstr "当前证书路径"
+msgid "Upload Certificate Path"
+msgstr "上传的证书路径"
 
-msgid "Please confirm the current certificate path"
-msgstr "请选择确认所传证书，证书不正确将无法运行"
