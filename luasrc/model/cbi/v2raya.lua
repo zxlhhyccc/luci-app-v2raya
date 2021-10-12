@@ -1,107 +1,60 @@
 
-local m,s,o,o1
-require "luci.http"
-local fs = require "nixio.fs"
-local SYS = require "luci.sys"
-
 m = Map("v2raya", translate("v2rayA"), translatef("Simple v2rayA switch."))
 
-m:section(SimpleSection).template = "v2raya/v2raya_status"
+m:section(SimpleSection).template  = "v2raya/v2raya_status"
 
 s = m:section(TypedSection, "v2raya")
-s.anonymous=true
+s.anonymous = true
 s.addremove=false
 
-o = s:option(Flag, "enabled", translate("Enabled"))
+o = s:option(Flag, "enabled", translate("Enable"))
 o.default = 0
 o.rmempty = false
 
-gui_address = s:option(Value, "address", translate("GUI access address"))
-gui_address.description = translate("Use 0.0.0.0 to monitor all access.")
-gui_address.default = "http://127.0.0.1:2017"
-gui_address.placeholder = "http://127.0.0.1:2017"
-gui_address.rmempty = false
+o = s:option(Value, "address", translate("GUI access address"))
+o.description = translate("Use 0.0.0.0 to monitor all access.")
+o.default = "http://0.0.0.0:2017"
+o.rmempty = false
 
--- [[ Bin Path ]]--
-v2ray_bin = s:option(Value, "v2ray_bin", translate("Bin Path"), translate("v2rayA Bin path if no bin please download"))
-v2ray_bin.default = "/usr/bin/v2raya"
-v2ray_bin.datatype = "string"
-v2ray_bin.optional = false
-v2ray_bin.rmempty = false
+o = s:option(Value, "config", translate("v2rayA configuration directory"))
+o.rmempty = '/etc/v2raya'
 
-o.validate=function(self, value)
-if value=="" then return nil end
-if fs.stat(value,"type")=="dir" then
-	fs.rmdir(value)
-end
-if fs.stat(value,"type")=="dir" then
-	if (m.message) then
-	m.message =m.message.."\nerror!bin path is a dir"
-	else
-	m.message ="error!bin path is a dir"
-	end
-	return nil
-end 
-return value
-end
+o = s:option(Value, "ipv6_support", translate("Ipv6 Support"))
+o.description = translate("Make sure your IPv6 network works fine before you turn it on.")
+o:value("auto", translate("AUTO"))
+o:value("on", translate("ON"))
+o:value("off", translate("OFF"))
+o.default = auto
 
-home = s:option(Value, "config", translate("v2rayA configuration directory"))
-home.default = "/etc/v2raya"
-home.placeholder = "/etc/v2raya"
-home.rmempty = false
+o = s:option(Value, "log_file", translate("Log file"))
+o.default = "/tmp/v2raya.log"
 
--- [[ Ipv6 Support ]]--
-ipv6 = s:option(Value, "ipv6_support", translate("Ipv6 Support"))
-ipv6.description = translate("Make sure your IPv6 network works fine before you turn it on.")
-ipv6:value("auto", translate("AUTO"))
-ipv6:value("on", translate("ON"))
-ipv6:value("off", translate("OFF"))
-ipv6.default = auto
+o = s:option(ListValue, "log_level", translate("Log Level"))
+o:value("trace",translate("Trace"))
+o:value("debug",translate("Debug"))
+o:value("info",translate("Info"))
+o:value("warn",translate("Warning"))
+o:value("error",translate("Error"))
+o.default = "Info"
 
--- [[ Log ]]--
-log_file = s:option(Flag, "enable_logging", translate("Enable logging"))
+o = s:option(Value, "log_max_days", translate("Log Keepd Max Days"))
+o.description = translate("Maximum number of days to keep log files.")
+o.datatype = "uinteger"
+o.default = "3"
 
-log_file = s:option(Value, "log_file", translate("Log file"))
-log_file:depends("enable_logging", "1")
-log_file.default = "/tmp/v2raya.log"
-log_file.placeholder = "/tmp/v2raya.log"
+o = s:option(Value, "log_disable_color", translate("Disable log color"))
+o.enabled = "true"
+o.disabled = "false"
+o.default = "1"
 
-log_level = s:option(ListValue, "log_level", translate("Log Level"))
-log_level:depends("enable_logging", "1")
-log_level:value("trace",translate("Trace"))
-log_level:value("debug",translate("Debug"))
-log_level:value("info",translate("Info"))
-log_level:value("warn",translate("Warning"))
-log_level:value("error",translate("Error"))
-log_level.default = "Info"
+o = s:option(Value, "log_disable_timestamp", translate("Log disable timestamp"))
+o.enabled = "true"
+o.disabled = "false"
+o.default = "0"
 
-log_max_days = s:option(Value, "log_max_days", translate("Log Keepd Max Days"))
-log_max_days:depends("enable_logging", "1")
-log_max_days.description = translate("Maximum number of days to keep log files.")
-log_max_days.datatype = "uinteger"
-log_max_days.default = "3"
-
-log_disable_color = s:option(Value, "log_disable_color", translate("Disable log color"))
-log_disable_color:depends("enable_logging", "1")
-log_disable_color.enabled = "true"
-log_disable_color.disabled = "false"
-log_disable_color.default = "1"
-
-log_disable_timestamp = s:option(Value, "log_disable_timestamp", translate("Log disable timestamp"))
-log_disable_timestamp:depends("enable_logging", "1")
-log_disable_timestamp.enabled = "true"
-log_disable_timestamp.disabled = "false"
-log_disable_timestamp.default = "0"
-
--- [[ Cert ]]--
-vless_grpc_inbound_cert_key = s:option(Flag, "vless_grpc_inbound_cert_key", translate("Self-signed Certificate"))
-vless_grpc_inbound_cert_key.default = "0"
-vless_grpc_inbound_cert_key.rmempty = true
-vless_grpc_inbound_cert_key.description = translate("If you have a self-signed certificate,please check the box")
-
-vless_grpc_inbound_cert_key = s:option(DummyValue, "upload", translate("Upload"))
-vless_grpc_inbound_cert_key.template = "v2raya/v2raya_certupload"
-vless_grpc_inbound_cert_key:depends("vless_grpc_inbound_cert_key", 1)
+o = s:option(Value, "vless_grpc_inbound_cert_key", translate("Upload certificate"))
+o.description = translate("Specify the certification path instead of automatically generating a self-signed certificate.")
+o.template = "v2raya/v2raya_certupload"
 
 cert_dir = "/etc/v2raya/"
 local path
@@ -133,14 +86,11 @@ if luci.http.formvalue("upload") then
 	end
 end
 
-vless_grpc_inbound_cert_key = s:option(Value, "certpath", translate("Current Certificate Path"))
-vless_grpc_inbound_cert_key.description = translate("Please confirm the current certificate path")
-vless_grpc_inbound_cert_key:depends("vless_grpc_inbound_cert_key", 1)
-vless_grpc_inbound_cert_key:value("1",translate("etc/v2raya/grpc_certificate.crt"))
-vless_grpc_inbound_cert_key:value("2",translate("/etc/v2raya/grpc_private.key"))
+o = s:option(Value, "vless_grpc_inbound_cert_key", translate("Upload Certificate Path"))
+o.default = "/etc/v2raya/cert.crt,/etc/v2raya/cert.key"
+
 
 o.inputstyle = "reload"
-    SYS.exec("/etc/init.d/v2raya restart >/dev/null 2>&1 &")
-
+    luci.sys.exec("/etc/init.d/v2raya restart >/dev/null 2>&1 &")
 
 return m
