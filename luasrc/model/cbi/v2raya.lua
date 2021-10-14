@@ -91,6 +91,7 @@ if luci.http.formvalue("upload") then
 end
 
 o = s:option(Value, "vless_grpc_inbound_cert_key", translate("Upload Certificate Path"))
+o.description = translate("This is the path where the certificate resides after the certificate is uploaded.")
 o.default = "/etc/v2raya/cert.crt,/etc/v2raya/cert.key"
 
 
