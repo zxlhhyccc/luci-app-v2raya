@@ -4,6 +4,12 @@ msgstr "v2rayA"
 msgid "Simple v2rayA switch."
 msgstr "简易的 v2rayA 开关"
 
+msgid "Service is not running."
+msgstr "服务未运行"
+
+msgid "Service is running."
+msgstr "服务正在运行"
+
 msgid "Open v2rayA page"
 msgstr "打开 v2rayA 页面"
 
